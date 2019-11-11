@@ -1,20 +1,25 @@
-<div align="center">
-  <img src="./docs/doccano.png">
-</div>
+# cheyyali
 
-# doccano
+cheyyali is a fork of [doccano](https://github.com/chakki-works/doccano) project.
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/98a0992c0a254d0ba23fd75631fe2907)](https://app.codacy.com/app/Hironsan/doccano?utm_source=github.com&utm_medium=referral&utm_content=doccano/doccano&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://travis-ci.com/doccano/doccano.svg?branch=master)](https://travis-ci.com/doccano/doccano)
 
-doccano is an open source text annotation tool for humans. It provides annotation features for text classification, sequence labeling and sequence to sequence tasks. So, you can create labeled data for sentiment analysis, named entity recognition, text summarization and so on. Just create a project, upload data and start annotating. You can build a dataset in hours.
+### [Named entity recognition](https://doccano.herokuapp.com/demo/named-entity-recognition/)
 
-## Demo
+The first demo is a sequence labeling task: named-entity recognition. You just select text spans and annotate them. Doccano supports shortcut keys, so you can quickly annotate text spans.
 
-You can try the [annotation demo](http://doccano.herokuapp.com).
+![Named Entity Recognition](./docs/named_entity_annotation.gif)
 
-![Named Entity Recognition](./docs/demo.gif)
+### [Sentiment analysis](https://doccano.herokuapp.com/demo/text-classification/)
 
+The second demo is a text classification task: sentiment analysis. Since there may be more than one category, you can annotate with multiple labels.
+
+![Text Classification](./docs/text_classification.gif)
+
+### [Machine translation](https://doccano.herokuapp.com/demo/translation/)
+
+The final demo is a sequence to sequence task: machine translation. Since there may be more than one response in sequence to sequence tasks, you can create multiple responses.
+
+![Machine Translation](./docs/translation.gif)
 
 ## Features
 
@@ -22,59 +27,137 @@ You can try the [annotation demo](http://doccano.herokuapp.com).
 -   Multi-language support
 -   Mobile support
 -   Emoji :smile: support
--   Dark theme
--   RESTful API
+-   (future) Auto labeling
 
-## Usage
+## Requirements _kavalasinavi_
 
-Two options to run doccano:
+-   Python 3.6+
+-   Django 2.1.7+
+-   Node.js 8.0+
+-   Google Chrome (highly recommended)
 
--   (Recommended) Docker Compose
--   Docker
+## Install _Cheyyadanaki_
 
-### Docker Compose
+### Clone repository
+
+First of all, you have to clone the repository:
 
 ```bash
-$ git clone https://github.com/doccano/doccano.git
-$ cd doccano
-$ docker-compose -f docker-compose.prod.yml up
+git clone https://github.com/CivicDatalab/cheyyali.git
+cd cheyyali
 ```
 
-Access <http://0.0.0.0/>.
+_Note for Windows developers: Be sure to configure git to correctly handle line endings or you may encounter `status code 127` errors while running the services in future steps. Running with the git config options below will ensure your git directory correctly handles line endings._
 
-_Note the superuser account credentials located in the `docker-compose.prod.yml` file:_
-```yml
-ADMIN_USERNAME: "admin"
-ADMIN_PASSWORD: "password"
+```bash
+git clone https://github.com/CivicDatalab/cheyyali.git --config core.autocrlf=input
+```
+
+### Installation
+
+First we need to install the dependencies. Run the following commands:
+
+```bash
+sudo apt-get install libpq-dev unixodbc unixodbc-dev npm
+pip install -r requirements.txt
+cd app
 ```
 
 > Note: If you want to add annotators, see [Frequently Asked Questions](https://github.com/doccano/doccano/wiki/Frequently-Asked-Questions#i-want-to-add-annotators)
 
-<!--
-_Note for Windows developers: Be sure to configure git to correctly handle line endings or you may encounter `status code 127` errors while running the services in future steps. Running with the git config options below will ensure your git directory correctly handles line endings._
+## Usage
+
+### Start the development server
+
+Let’s start the development server and explore it.
+
+#### Running Django development server
+
+Before running, we need to make migration. Run the following command:
 
 ```bash
-git clone https://github.com/doccano/doccano.git --config core.autocrlf=input
-```
--->
-
-### Docker
-
-As a one-time setup, create a Docker container for Doccano:
-
-```bash
-docker pull chakkiworks/doccano
-docker container create --name doccano \
-  -e "ADMIN_USERNAME=admin" \
-  -e "ADMIN_EMAIL=admin@example.com" \
-  -e "ADMIN_PASSWORD=password" \
-  -p 8000:8000 chakkiworks/doccano
+python manage.py migrate
 ```
 
-Next, start Doccano by running the container:
+Next we need to create a user who can login to the admin site. Run the following command:
 
 ```bash
-docker container start doccano
+python manage.py create_admin --noinput --username "admin" --email "admin@example.com" --password "password"
+```
+
+Create the admin, annotator, and annotation approver roles to assign to users. Run the following command:
+
+```bash
+python manage.py create_roles
+```
+
+Developers can also validate that the project works as expected by running the tests:
+
+```bash
+python manage.py test server.tests
+```
+
+Finally, to start the server, run the following command:
+
+```bash
+python manage.py runserver
+```
+
+Optionally, you can change the bind ip and port using the command
+
+```bash
+python manage.py runserver <ip>:<port>
+```
+
+
+### Confirm all cheyalli services are running
+Open a Web browser and go to <http://127.0.0.1:8000/login/>. You should see the login screen:
+
+<img src="./docs/login_form.png" alt="Login Form" width=400>
+
+### Create a project
+
+Now, try logging in with the superuser account you created in the previous step. You should see the cheyalli project list page:
+
+<img src="./docs/projects.png" alt="Projects page" width=600>
+
+There is no project created yet. To create your project, make sure you’re in the project list page and select `Create Project` button. You should see the following screen:
+
+<img src="./docs/create_project.png" alt="Project Creation" width=400>
+
+In this step, you can select three project types: text classification, sequence labeling and sequence to sequence. You should select a type with your purpose.
+
+### Import Data
+
+After creating a project, you will see the "Import Data" page, or click `Import Data` button in the navigation bar. You should see the following screen:
+
+<img src="./docs/upload.png" alt="Upload project" width=600>
+
+You can upload the following types of files (depending on project type):
+
+-   `Text file`: file must contain one sentence/document per line separated by new lines.
+-   `CSV file`: file must contain a header with `"text"` as the first column or be one-column csv file. If using labels the second column must be the labels.
+-   `Excel file`: file must contain a header with `"text"` as the first column or be one-column excel file. If using labels the second column must be the labels. Supports multiple sheets as long as format is the same.
+-   `JSON file`: each line contains a JSON object with a `text` key. JSON format supports line breaks rendering.
+
+> Notice: Doccano won't render line breaks in annotation page for sequence labeling task due to the indent problem, but the exported JSON file still contains line breaks.
+
+`example.txt/csv/xlsx`
+
+```txt
+EU rejects German call to boycott British lamb.
+President Obama is speaking at the White House.
+He lives in Newark, Ohio.
+...
+```
+
+`example.json`
+
+```JSON
+{"text": "EU rejects German call to boycott British lamb."}
+{"text": "President Obama is speaking at the White House."}
+{"text": "He lives in Newark, Ohio."}
+...
 ```
 
 To stop the container, run `docker container stop doccano -t 5`.
@@ -96,7 +179,7 @@ Access <http://127.0.0.1:8000/>.
 
 ## Contribution
 
-As with any software, doccano is under continuous development. If you have requests for features, please file an issue describing your request. Also, if you want to see work towards a specific feature, feel free to contribute by working towards it. The standard procedure is to fork the repository, add a feature, fix a bug, then file a pull request that your changes are to be merged into the main repository and included in the next release.
+You can export data as CSV file or JSON file by clicking the button. As for the export file format, you can check it here: [Export File Formats](https://github.com/CivicDatalab/cheyyali/wiki/Export-File-Formats).
 
 Here are some tips might be helpful. [How to Contribute to Doccano Project](https://github.com/doccano/doccano/wiki/How-to-Contribute-to-Doccano-Project)
 
@@ -116,7 +199,6 @@ Here are some tips might be helpful. [How to Contribute to Doccano Project](http
   year={2018},
 }
 ```
-
 ## Contact
 
-For help and feedback, please feel free to contact [the author](https://github.com/Hironsan).
+For help and feedback, please feel free to contact [Samantar Team](https://samantar@civicdatalab.in)
