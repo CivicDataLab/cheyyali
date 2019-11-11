@@ -217,4 +217,4 @@ and the exported file will look like this:
 ```
 ## Contact
 
-For help and feedback, please feel free to contact [Samantar Team](https://mail.samantar@civicdatalab.in)
+For help and feedback, please feel free to contact [Samantar Team](mailto:samantar@civicdatalab.in)
