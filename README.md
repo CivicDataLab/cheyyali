@@ -1,13 +1,7 @@
-# doccano
+# cheyyali
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/98a0992c0a254d0ba23fd75631fe2907)](https://app.codacy.com/app/Hironsan/doccano?utm_source=github.com&utm_medium=referral&utm_content=chakki-works/doccano&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://travis-ci.org/chakki-works/doccano.svg?branch=master)](https://travis-ci.org/chakki-works/doccano)
+cheyyali is a fork of [doccano](https://github.com/chakki-works/doccano) project.
 
-doccano is an open source text annotation tool for humans. It provides annotation features for text classification, sequence labeling and sequence to sequence tasks. So, you can create labeled data for sentiment analysis, named entity recognition, text summarization and so on. Just create a project, upload data and start annotating. You can build a dataset in hours.
-
-## Demo
-
-You can try the [annotation demo](http://doccano.herokuapp.com).
 
 ### [Named entity recognition](https://doccano.herokuapp.com/demo/named-entity-recognition/)
 
@@ -27,37 +21,6 @@ The final demo is a sequence to sequence task: machine translation. Since there 
 
 ![Machine Translation](./docs/translation.gif)
 
-## Deployment
-
-### Azure
-
-Doccano can be deployed to Azure ([Web App for Containers](https://azure.microsoft.com/en-us/services/app-service/containers/) +
-[PostgreSQL database](https://azure.microsoft.com/en-us/services/postgresql/)) by clicking on the button below:
-
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fchakki-works%2Fdoccano%2Fmaster%2Fazuredeploy.json)
-
-### Heroku
-
-Doccano can be deployed to [Heroku](https://www.heroku.com/) by clicking on the button below:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
-Of course, you can deploy doccano by using [heroku-cli](https://devcenter.heroku.com/articles/heroku-cli).
-
-```bash
-heroku create
-heroku stack:set container
-git push heroku master
-```
-
-### AWS
-
-Doccano can be deployed to AWS ([Cloudformation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)) by clicking on the button below:
-
-[![AWS CloudFormation Launch Stack SVG Button](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?#/stacks/create/review?stackName=doccano&templateURL=https://s3-external-1.amazonaws.com/cf-templates-10vry9l3mp71r-us-east-1/2019290i9t-AppSGl1poo4j8qpq)
-
-> Notice: (1) EC2 KeyPair cannot be created automatically, so make sure you have an existing EC2 KeyPair in one region. Or [create one yourself](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair). (2) If you want to access doccano via HTTPS in AWS, here is an [instruction](https://github.com/chakki-works/doccano/wiki/HTTPS-setting-for-doccano-in-AWS).
-
 ## Features
 
 -   Collaborative annotation
@@ -65,46 +28,36 @@ Doccano can be deployed to AWS ([Cloudformation](https://docs.aws.amazon.com/AWS
 -   Emoji :smile: support
 -   (future) Auto labeling
 
-## Requirements
+## Requirements _kavalasinavi_
 
 -   Python 3.6+
 -   Django 2.1.7+
 -   Node.js 8.0+
 -   Google Chrome (highly recommended)
 
-## Installation
+## Install _Cheyyadanaki_
 
 ### Clone repository
 
 First of all, you have to clone the repository:
 
 ```bash
-git clone https://github.com/chakki-works/doccano.git
-cd doccano
+git clone https://github.com/CivicDatalab/cheyyali.git
+cd cheyyali
 ```
 
 _Note for Windows developers: Be sure to configure git to correctly handle line endings or you may encounter `status code 127` errors while running the services in future steps. Running with the git config options below will ensure your git directory correctly handles line endings._
 
 ```bash
-git clone https://github.com/chakki-works/doccano.git --config core.autocrlf=input
+git clone https://github.com/CivicDatalab/cheyyali.git --config core.autocrlf=input
 ```
 
-### Install doccano
-
-To install doccano, there are three options:
-
-#### Option 1: Pull the production Docker image
-
-```bash
-docker pull chakkiworks/doccano
-```
-
-#### Option 2: Setup Python environment
+### Installation
 
 First we need to install the dependencies. Run the following commands:
 
 ```bash
-sudo apt-get install libpq-dev
+sudo apt-get install libpq-dev unixodbc unixodbc-dev npm
 pip install -r requirements.txt
 cd app
 ```
@@ -120,33 +73,13 @@ npm run build
 cd ..
 ```
 
-#### Option 3: Pull the development Docker-Compose images
-
-```bash
-docker-compose pull
-```
-
 ## Usage
 
 ### Start the development server
 
 Let’s start the development server and explore it.
 
-Depending on your installation method, there are three options:
-
-#### Option 1: Running the Docker image as a Container
-
-First, run a Docker container:
-
-```bash
-docker run -d --rm --name doccano \
-  -e "ADMIN_USERNAME=admin" \
-  -e "ADMIN_EMAIL=admin@example.com" \
-  -e "ADMIN_PASSWORD=password" \
-  -p 8000:8000 chakkiworks/doccano
-```
-
-#### Option 2: Running Django development server
+#### Running Django development server
 
 Before running, we need to make migration. Run the following command:
 
@@ -184,28 +117,15 @@ Optionally, you can change the bind ip and port using the command
 python manage.py runserver <ip>:<port>
 ```
 
-#### Option 3: Running the development Docker-Compose stack
 
-We can use docker-compose to set up the webpack server, django server, database, etc. all in one command:
-
-```bash
-docker-compose up
-```
-
-_Note the superuser account credentials located in the `docker-compose.yaml` file:_
-```yml
-ADMIN_USERNAME: "admin"
-ADMIN_PASSWORD: "password"
-```
-
-### Confirm all doccano services are running
+### Confirm all cheyalli services are running
 Open a Web browser and go to <http://127.0.0.1:8000/login/>. You should see the login screen:
 
 <img src="./docs/login_form.png" alt="Login Form" width=400>
 
 ### Create a project
 
-Now, try logging in with the superuser account you created in the previous step. You should see the doccano project list page:
+Now, try logging in with the superuser account you created in the previous step. You should see the cheyalli project list page:
 
 <img src="./docs/projects.png" alt="Projects page" width=600>
 
@@ -276,7 +196,7 @@ After the annotation step, you can download the annotated data. Click the `Edit 
 
 <img src="./docs/export_data.png" alt="Export data" width=600>
 
-You can export data as CSV file or JSON file by clicking the button. As for the export file format, you can check it here: [Export File Formats](https://github.com/chakki-works/doccano/wiki/Export-File-Formats). 
+You can export data as CSV file or JSON file by clicking the button. As for the export file format, you can check it here: [Export File Formats](https://github.com/CivicDatalab/cheyyali/wiki/Export-File-Formats).
 
 Each exported document will have metadata column or key, which will contain
 additional columns or keys from the imported document. The primary use-case for metadata is to allow you to match exported data with other system
@@ -295,21 +215,6 @@ and the exported file will look like this:
 ```JSON
 {"doc_id": 2023, "text": "EU rejects German call to boycott British lamb.", "labels": ["news"], "username": "root", "meta": {"external_id": 1}}
 ```
-
-### Tutorial
-
-We prepared a NER annotation tutorial, which can help you have a better understanding of doccano. Please first read the README page, and then take the tutorial. [A Tutorial For Sequence Labeling Project](https://github.com/chakki-works/doccano/wiki/A-Tutorial-For-Sequence-Labeling-Project).
-
-I hope you are having a great day!
-
-## Contribution
-
-As with any software, doccano is under continuous development. If you have requests for features, please file an issue describing your request. Also, if you want to see work towards a specific feature, feel free to contribute by working towards it. The standard procedure is to fork the repository, add a feature, fix a bug, then file a pull request that your changes are to be merged into the main repository and included in the next release.
-
-Here are some tips might be helpful. [How to Contribute to Doccano Project](https://github.com/chakki-works/doccano/wiki/How-to-Contribute-to-Doccano-Project)
-
 ## Contact
 
-For help and feedback, please feel free to contact [the author](https://github.com/Hironsan).
-
-**If you are favorite to doccano, please follow my [GitHub](https://github.com/Hironsan) and [Twitter](https://twitter.com/Hironsan13) account.**
+For help and feedback, please feel free to contact [Samantar Team](mailto:samantar@civicdatalab.in)
