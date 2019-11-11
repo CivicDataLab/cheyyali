@@ -201,4 +201,4 @@ Here are some tips might be helpful. [How to Contribute to Doccano Project](http
 ```
 ## Contact
 
-For help and feedback, please feel free to contact [Samantar Team](https://samantar@civicdatalab.in)
+For help and feedback, please feel free to contact [Samantar Team](https://mail.samantar@civicdatalab.in)
