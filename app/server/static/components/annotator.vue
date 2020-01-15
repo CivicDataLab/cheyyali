@@ -10,7 +10,7 @@
       }"
     )
       span
-        span(
+        span.text(
           v-for="highlightedChunk in getSearchHighlightedChunks(textPart(r))"
           v-bind:class="highlightedChunk.highlight && 'has-background-warning'"
         ) {{ highlightedChunk.content }}
