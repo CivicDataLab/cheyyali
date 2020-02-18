@@ -15,7 +15,7 @@ from rest_framework_csv.renderers import CSVRenderer
 
 from .filters import DocumentFilter
 from .models import Project, Label, Document, RoleMapping, Role
-from .permissions import IsProjectAdmin, IsAnnotatorAndReadOnly, IsAnnotator, IsAnnotationApproverAndReadOnly, IsOwnAnnotation, IsAnnotationApprover
+from .permissions import IsProjectAdmin, IsAnnotatorAndReadOnly, IsAnnotator, IsAnnotationApproverAndReadOnly, IsOwnAnnotation, IsAnnotationApprover, IsCollaborativeAnnotation
 from .serializers import ProjectSerializer, LabelSerializer, DocumentSerializer, UserSerializer
 from .serializers import ProjectPolymorphicSerializer, RoleMappingSerializer, RoleSerializer
 from .utils import CSVParser, ExcelParser, JSONParser, PlainTextParser, CoNLLParser, iterable_to_io
@@ -185,7 +185,7 @@ class AnnotationList(generics.ListCreateAPIView):
 
 class AnnotationDetail(generics.RetrieveUpdateDestroyAPIView):
     lookup_url_kwarg = 'annotation_id'
-    permission_classes = [IsAuthenticated & (((IsAnnotator | IsAnnotationApprover) & IsOwnAnnotation) | IsProjectAdmin)]
+    permission_classes = [IsAuthenticated & (((IsAnnotator | IsAnnotationApprover) & (IsOwnAnnotation | (IsCollaborativeAnnotation))) | IsProjectAdmin)]
 
     def get_serializer_class(self):
         project = get_object_or_404(Project, pk=self.kwargs['project_id'])

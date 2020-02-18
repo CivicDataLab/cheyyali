@@ -41,6 +41,13 @@ class IsOwnAnnotation(ProjectMixin, BasePermission):
         annotation = model.objects.filter(id=annotation_id, user=request.user)
 
         return annotation.exists()
+class IsCollaborativeAnnotation(ProjectMixin, BasePermission):
+
+    def has_permission(self, request, view):
+        project_id = self.get_project_id(request, view)
+        annotation_id = view.kwargs.get('annotation_id')
+        project = get_object_or_404(Project, pk=project_id)
+        return project.collaborative_annotation
 
 
 class RolePermission(ProjectMixin, BasePermission):
