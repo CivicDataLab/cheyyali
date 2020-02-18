@@ -239,6 +239,7 @@ export default {
       HTTP.get('statistics').then((response) => {
         this.total = response.data.total;
         this.remaining = response.data.remaining;
+        this.userRemaining = response.data.user_remaining;
       });
     },
 
@@ -263,6 +264,11 @@ export default {
     achievement() {
       const done = this.total - this.remaining;
       const percentage = Math.round(done / this.total * 100);
+      return this.total > 0 ? percentage : 0;
+    },
+    userAchievement() {
+      const userDone = this.total - this.userRemaining;
+      const percentage = Math.round(userDone / this.total * 100);
       return this.total > 0 ? percentage : 0;
     },
 

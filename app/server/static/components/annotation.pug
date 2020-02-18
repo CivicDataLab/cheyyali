@@ -99,6 +99,7 @@ div.columns(v-cloak="")
             v-bind:show-line="false"
           )
 
+    span Total stats
     div.columns.is-multiline.is-gapless.is-mobile.is-vertical-center
       div.column.is-3
         progress.progress.is-inline-block(
@@ -109,6 +110,19 @@ div.columns(v-cloak="")
       div.column.is-6
         span.ml10
           strong {{ total - remaining }}
+        | /
+        span {{ total }}
+    span User stats
+    div.columns.is-multiline.is-gapless.is-mobile.is-vertical-center
+      div.column.is-3
+        progress.progress.is-inline-block(
+          v-bind:class="progressColor"
+          v-bind:value="userAchievement"
+          max="100"
+        ) 30%
+      div.column.is-6
+        span.ml10
+          strong {{ total - userRemaining }}
         | /
         span {{ total }}
 

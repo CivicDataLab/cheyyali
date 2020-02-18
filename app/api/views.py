@@ -80,11 +80,13 @@ class StatisticsAPI(APIView):
         docs = project.documents
         annotation_class = project.get_annotation_class()
         total = docs.count()
-        done = annotation_class.objects.filter(document_id__in=docs.all(),
+        user_done = annotation_class.objects.filter(document_id__in=docs.all(),
             user_id=self.request.user).\
             aggregate(Count('document', distinct=True))['document__count']
+        done = annotation_class.objects.filter(document_id__in=docs.all()).\
+            aggregate(Count('document', distinct=True))['document__count']
         remaining = total - done
-        return {'total': total, 'remaining': remaining}
+        return {'total': total, 'remaining': remaining, 'user_remaining': total - user_done}
 
     def label_per_data(self, project):
         annotation_class = project.get_annotation_class()
