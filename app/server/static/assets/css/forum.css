@@ -136,7 +136,7 @@ p {
 }
 
 .project-image {
-  background-image: url('/static/assets/images/cat.png');
+  background-image: url('/static/assets/images/pen_book_empty.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
